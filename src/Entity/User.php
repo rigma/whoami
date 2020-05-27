@@ -8,7 +8,6 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as PhoneNumberConst
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints;
-use libphonenumber\PhoneNumber;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -19,7 +18,6 @@ class User implements UserInterface
     /**
      * @var \Ramsey\Uuid\Uuid
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
      */
     private $id;
@@ -62,12 +60,17 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4();
+    }
+
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -82,7 +85,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return (string) $this->password;
     }
@@ -95,7 +98,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return \libphonenumber\PhoneNumber|string
+     * @return \libphonenumber\PhoneNumber|string|null
      */
     public function getPhoneNumber()
     {
