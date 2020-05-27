@@ -65,7 +65,7 @@ class User implements UserInterface
         $this->id = Uuid::uuid4();
     }
 
-    public function getId(): Uuid
+    public function getId()
     {
         return $this->id;
     }
@@ -98,7 +98,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return \libphonenumber\PhoneNumber|string|null
+     * @return \libphonenumber\PhoneNumber
      */
     public function getPhoneNumber()
     {
