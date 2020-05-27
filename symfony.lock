@@ -81,6 +81,9 @@
     "doctrine/sql-formatter": {
         "version": "1.0.1"
     },
+    "firebase/php-jwt": {
+        "version": "v5.2.0"
+    },
     "giggsey/libphonenumber-for-php": {
         "version": "8.12.4"
     },
