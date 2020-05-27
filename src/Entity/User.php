@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as PhoneNumberConstraint;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints;
 use libphonenumber\PhoneNumber;
 
 /**
@@ -26,6 +28,9 @@ class User implements UserInterface
      * The email of the user
      *
      * @var string
+     * @Constraints\Email
+     * @Constraints\NotBlank
+     * @Constraints\NotNull
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -34,6 +39,8 @@ class User implements UserInterface
      * The hashed password of the user
      *
      * @var string
+     * @Constraints\NotBlank
+     * @Constraints\NotNull
      * @ORM\Column(type="string")
      */
     private $password;
@@ -41,7 +48,8 @@ class User implements UserInterface
     /**
      * The user's phone number
      *
-     * @var \libphonenumber\PhoneNumber
+     * @var \libphonenumber\PhoneNumber|string
+     * @PhoneNumberConstraint(defaultRegion="FR")
      * @ORM\Column(type="phone_number")
      */
     private $phone_number;
@@ -86,11 +94,18 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return \libphonenumber\PhoneNumber|string
+     */
     public function getPhoneNumber()
     {
         return $this->phone_number;
     }
 
+    /**
+     * @param \libphonenumber\PhoneNumber|string $phone_number
+     * @return self
+     */
     public function setPhoneNumber($phone_number): self
     {
         $this->phone_number = $phone_number;
