@@ -33,7 +33,23 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request)
     {
-        return $request->headers->has('Authorization');
+        if (!$request->headers->has('Authorization')) {
+            return false;
+        }
+
+        $authorization = $request->headers->get('Authorization');
+        if ($authorization === null || strpos($authorization, 'Bearer ') !== 0) {
+            return false;
+        }
+
+        $token = substr($authorization, 7);
+        try {
+            JWT::decode($token, $_ENV['APP_SECRET'], ['HS256']);
+        } catch (ExpiredException $e) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getCredentials(Request $request): ?object
