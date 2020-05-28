@@ -2,11 +2,18 @@ version: '3'
 
 services:
   web:
-    build: .
+    depends_on:
+      - db
+    build:
+      context: ./api
+    environment:
+      APP_ENV: prod
+      APP_SECRET: 7bd55ac5911b16c59ce265b025a2618d
+      APP_PORT: 8001
+      DB_HOST: db
+      DATABASE_URL: postgresql://exo:rootme@db:5432/auth-db?serverVersion=12&charset=utf8
     ports:
-      - "8000:8000"
-    volumes:
-      - .:/var/www
+      - "8001:8001"
   db:
     image: postgres:latest
     restart: always
@@ -18,8 +25,3 @@ services:
       - "5432:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data/pgdata
-  kv:
-    image: redis:latest
-    restart: always
-    ports:
-      - "6379:6379"
