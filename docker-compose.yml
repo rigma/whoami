@@ -2,8 +2,6 @@ version: '3'
 
 services:
   web:
-    depends_on:
-      - db
     build:
       context: ./api
     environment:
@@ -14,6 +12,11 @@ services:
       DATABASE_URL: postgresql://exo:rootme@db:5432/auth-db?serverVersion=12&charset=utf8
     ports:
       - "8001:8001"
+  whoami:
+    build:
+      context: ./whoami
+    ports:
+      - "8000:80"
   db:
     image: postgres:latest
     restart: always
