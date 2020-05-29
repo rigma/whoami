@@ -11,23 +11,39 @@
   </nav>
   <main>
     <router-view />
+    <div v-if="showWarning" class="warnings">
+      <p>{{ warning }}</p>
+    </div>
   </main>
 </template>
 
 <script>
 import { defineComponent, computed } from 'vue'
+import { WARNINGS } from './constants'
 import globalState from './state'
 
 export default defineComponent({
   name: 'App',
   setup () {
     const loggedIn = computed(() => globalState.token !== null)
+    const showWarning = computed(() => globalState.warningCount > 0)
+    const warning = computed(() =>
+      globalState.warningCount >= WARNINGS.length
+        ? WARNINGS[WARNINGS.length - 1]
+        : WARNINGS[globalState.warningCount - 1]
+    )
     
     const onLogOut = () => {
       globalState.token = null
+      globalState.warningCount = 0
     }
 
-    return { loggedIn, onLogOut }
+    return {
+      loggedIn,
+      showWarning,
+      warning,
+      onLogOut
+    }
   }
 })
 </script>

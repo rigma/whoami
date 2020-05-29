@@ -46,6 +46,7 @@ export default defineComponent({
     // If the request is not successful, then we shall not be authorized to take this route
     if (res.status !== 200) {
       console.error('You have no right to be here!')
+      globalState.warningCount++
       return next('/')
     }
 

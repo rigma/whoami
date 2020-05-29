@@ -2,5 +2,6 @@ import { reactive } from 'vue'
 
 export default reactive({
   token: null,
-  sessionExpired: false
+  sessionExpired: false,
+  warningCount: 0
 })
