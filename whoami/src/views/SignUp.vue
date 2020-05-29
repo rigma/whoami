@@ -63,7 +63,11 @@ export default defineComponent({
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(user)
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+            phone_number: user.phoneNumber
+          })
         })
       } catch (err) {
         console.error(err)
