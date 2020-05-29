@@ -2,7 +2,7 @@
   <nav class="links">
     <ul v-if="loggedIn">
       <li>
-        <a href="javascript://">Lien super secret, ne pas cliquer !</a>
+        <router-link to="/secret">Lien super secret, ne pas cliquer !</router-link>
       </li>
       <li>
         <a @click.prevent="onLogOut" href="javascript://">Se déconnecter</a>
