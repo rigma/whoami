@@ -33,6 +33,9 @@
     </div>
     <button type="submit">Je m'inscris !</button>
   </form>
+  <p>
+    <router-link to="/connexion">Déjà inscrit ?</router-link>
+  </p>
 </template>
 
 <script>

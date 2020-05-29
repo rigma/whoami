@@ -23,6 +23,9 @@
     </div>
     <button type="submit">Je me connecte !</button>
   </form>
+  <p>
+    <router-link to="/s-inscrire">Vous n'êtes pas encore inscrit ?</router-link>
+  </p>
 </template>
 
 <script>
