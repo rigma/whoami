@@ -17,6 +17,7 @@
         <input v-model="password"
           type="password"
           id="password"
+          minlength="6"
           placeholder="Il doit faire au moins 6 caractères"
           aria-placeholder="Il doit faire au moins 6 caractères"
           required
