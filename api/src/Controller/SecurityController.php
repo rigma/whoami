@@ -41,9 +41,14 @@ class SecurityController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json([
-            'email' => $user->getEmail(),
-        ], Response::HTTP_CREATED);
+        $token = JWT::encode([
+            'sub' => $user->getUsername(),
+            'aud' => $user->getRoles(),
+            'exp' => time() + 15 * 60,
+            'iat' => time(),
+        ], $_ENV['APP_SECRET']);
+
+        return new Response($token, Response::HTTP_CREATED);
     }
 
     /**

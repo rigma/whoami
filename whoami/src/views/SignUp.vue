@@ -44,6 +44,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { API_BASE_URL } from '../constants'
+import globalState from '../state'
 
 export default defineComponent({
   name: 'SignUp',
@@ -79,6 +80,14 @@ export default defineComponent({
         return
       }
 
+      try {
+        globalState.token = await res.text()
+      } catch (err) {
+        console.error('Unable to signup!')
+        return
+      }
+
+      globalState.sessionExpired = false
       router.push('/')
     }
 
