@@ -99,6 +99,14 @@ export default defineComponent({
       ...toRefs(user),
       onSubmit
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    // If we're already logged in, we'll redirect to the home page
+    if (globalState.token !== null) {
+      return next('/')
+    }
+
+    next()
   }
 })
 </script>
