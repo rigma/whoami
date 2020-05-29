@@ -20,27 +20,33 @@ class SecurityController extends AbstractController
     {
         $user = new User();
 
+        // Validating request body with user form
         $body = $this->createForm(UserType::class, $user);
         $body->submit($request->request->all());
 
+        // If the form is not submitted, we'll return an error
         if (!$body->isSubmitted()) {
             return $this->json([
                 'error' => 'You have not submitted any data to the endpoint!',
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        // Same if the form is not valid
         if (!$body->isValid()) {
             return $this->json([
                 'error' => 'Invalid data submitted to the endpoint!',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        // Producing the new user and encoding its password
         $user = $body->getData();
         $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
 
+        // Saving the user
         $em->persist($user);
         $em->flush();
 
+        // And we'll authenticate him
         $token = JWT::encode([
             'sub' => $user->getUsername(),
             'aud' => $user->getRoles(),

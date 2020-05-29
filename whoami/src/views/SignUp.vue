@@ -58,6 +58,7 @@ export default defineComponent({
     const router = useRouter()
 
     const onSubmit = async () => {
+      // Trying to create a new user in the API database
       let res
       try {
         res = await fetch(`${API_BASE_URL}/api/signup`, {
@@ -81,6 +82,8 @@ export default defineComponent({
         return
       }
 
+      // When the sign up is successfull, we retrieve a JWT token, so we shall
+      // save it in the app global state
       try {
         globalState.token = await res.text()
       } catch (err) {

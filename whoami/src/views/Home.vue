@@ -45,6 +45,7 @@ export default defineComponent({
       return next()
     }
 
+    // Trying to fetch the userinfo
     let res
     try {
       res = await fetch(`${API_BASE_URL}/api/user/me`, {
@@ -66,6 +67,7 @@ export default defineComponent({
       return next()
     }
 
+    // If they are available, we'll display them on the interface
     userInfo.value = await res.json();
     next()
   }

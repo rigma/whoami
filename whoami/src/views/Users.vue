@@ -29,6 +29,7 @@ export default defineComponent({
       return next('/')
     }
 
+    // Trying to retrieve the secret user list with their personnal info
     let res
     try {
       res = await fetch(`${API_BASE_URL}/api/user`, {
@@ -42,6 +43,7 @@ export default defineComponent({
       return next('/')
     }
 
+    // If the request is not successful, then we shall not be authorized to take this route
     if (res.status !== 200) {
       console.error('You have no right to be here!')
       return next('/')

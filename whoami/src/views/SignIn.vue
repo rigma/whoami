@@ -49,32 +49,45 @@ export default defineComponent({
         return
       }
 
-      const res = await fetch(`${API_BASE_URL}/api/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.value,
-          password: password.value
+      // Trying to sigin the user with the credentials he has given
+      let res
+      try {
+        res = await fetch(`${API_BASE_URL}/api/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value
+          })
         })
-      })
+      } catch (err) {
+        console.error(err)
+        return
+      }
 
       if (res.status >= 400) {
         console.error('Wrong credentials!')
         return
       }
 
-      const token = await res.text()
-      globalState.token = token
-      globalState.sessionExpired = false
+      // Saving the JWT token into the global state
+      try {
+        globalState.token = await res.text()
+      } catch (err) {
+        console.error(err)
+        return
+      }
 
+      globalState.sessionExpired = false
       router.push('/')
     }
 
     return { email, password, onSubmit }
   },
   beforeRouteEnter (to, from, next) {
+    // If we're already logged in, we'll redirect to the home page
     if (globalState.token !== null) {
       return next('/')
     }
