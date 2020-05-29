@@ -1,21 +1,13 @@
 <template>
   <nav>
-    <ul>
+    <ul v-if="loggedIn">
       <li>
-        <router-link to="/">Accueil</router-link>
+        <a href="javascript://">Lien super secret, ne pas cliquer !</a>
+      </li>
+      <li>
+        <a @click.prevent="onLogOut" href="javascript://">Se déconnecter</a>
       </li>
     </ul>
-    <ul v-if="!loggedIn">
-      <li>
-        <router-link to="/connexion">Se connecter</router-link>
-      </li>
-      <li>
-        <router-link to="/s-inscrire">S'inscrire</router-link>
-      </li>
-    </ul>
-    <div v-else>
-      <a @click.prevent="onLogOut" href="javascript://">Se déconnecter</a>
-    </div>
   </nav>
   <main>
     <router-view />
