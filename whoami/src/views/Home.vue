@@ -6,11 +6,17 @@
   </article>
   <article v-else>
     <h1>N'oubliez plus votre courriel et votre numéro de téléphone ! 🤯</h1>
-    <div>
-      <router-link to="/connexion">Se connecter</router-link>
-      ou
-      <router-link to="/s-inscrire">S'inscrire</router-link>
-    </div>
+    <ul class="auth-box">
+      <li>
+        <router-link to="/connexion">Se connecter</router-link>
+      </li>
+      <li>
+        ou
+      </li>
+      <li>
+        <router-link to="/s-inscrire">S'inscrire</router-link>
+      </li>
+    </ul>
   </article>
 </template>
 
@@ -65,3 +71,35 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+article {
+  background: #fafafa;
+  border: 1px solid var(--border-color);
+  box-shadow: 0px 0px 5px 1px var(--shadow-color);
+  border-radius: 7px;
+  padding: 12px;
+}
+
+article h1 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+article ul.auth-box {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0;
+}
+
+article ul.auth-box li {
+  margin: 0px 10px;
+}
+
+article ul.auth-box a {
+  color: var(--text-color);
+  text-decoration: underline dotted;
+}
+</style>
