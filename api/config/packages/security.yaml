@@ -23,6 +23,11 @@ security:
                 check_path: /api/login
                 username_path: email
 
+        signup:
+            pattern: ^/api/signup
+            stateless: true
+            anonymous: true
+
         api:
             pattern: ^/api
             stateless: true
@@ -33,6 +38,7 @@ security:
 
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user/me, roles: ROLE_USER }
         - { path: ^/api/user, roles: ROLE_ADMIN }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
