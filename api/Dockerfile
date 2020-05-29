@@ -18,4 +18,4 @@ COPY src ./src
 COPY --from=build /usr/src/vendor ./vendor
 COPY .env wait-for-it.sh docker-entrypoint.sh ./
 RUN chmod +x wait-for-it.sh docker-entrypoint.sh
-CMD [ "./wait-for-it.sh", "-t", "5",  "${DB_HOST}:${DB_PORT}", "--", "./docker-entrypoint.sh" ]
+CMD [ "./wait-for-it.sh", "-t", "10",  "${DB_HOST}:${DB_PORT}", "--", "./docker-entrypoint.sh" ]
