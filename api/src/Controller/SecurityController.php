@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/signup", name="signup", methods={"POST"})
+     * @Route("/api/signup", name="signup", methods={"POST"})
      */
     public function signup(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
