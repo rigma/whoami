@@ -1,6 +1,11 @@
 <template>
   <article>
     <h1>Connexion</h1>
+    <div v-if="error !== null" class="error-box">
+      <p v-if="error === 'credentials'">Mauvais identifiants !</p>
+      <p v-else-if="error === 'logged-in'">Déhà identifié !</p>
+      <p v-else>Erreur inconnue</p>
+    </div>
     <form @submit.prevent="onSubmit">
       <div class="group">
         <label for="email">Adresse électronique :</label>
@@ -41,11 +46,14 @@ export default defineComponent({
   setup () {
     const email = ref(null)
     const password = ref(null)
+    const error = ref(null)
     const router = useRouter()
 
     const onSubmit = async () => {
       if (globalState.token !== null) {
         console.error('Already logged in!')
+        error.value = 'logged-in'
+
         return
       }
 
@@ -64,11 +72,15 @@ export default defineComponent({
         })
       } catch (err) {
         console.error(err)
+        error.value = 'unknown'
+
         return
       }
 
       if (res.status >= 400) {
         console.error('Wrong credentials!')
+        error.value = 'credentials'
+  
         return
       }
 
@@ -77,14 +89,22 @@ export default defineComponent({
         globalState.token = await res.text()
       } catch (err) {
         console.error(err)
+        error.value = 'unknown'
+
         return
       }
 
       globalState.sessionExpired = false
+      error.value = null
       router.push('/')
     }
 
-    return { email, password, onSubmit }
+    return {
+      error,
+      email,
+      password,
+      onSubmit
+    }
   },
   beforeRouteEnter (to, from, next) {
     // If we're already logged in, we'll redirect to the home page
@@ -109,6 +129,11 @@ article {
 article h1 {
   text-align: center;
   margin-bottom: 24px;
+}
+
+article .error-box {
+  margin-bottom: 6px;
+  font-style: italic;
 }
 
 article form {
